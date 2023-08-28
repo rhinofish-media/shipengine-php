@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace ShipEngine;
 
@@ -98,7 +100,7 @@ final class ShipEngineConfig implements \JsonSerializable
             );
         }
 
-        $timeout = $config['timeout'];
+        $timeout = $config['timeout'] ?? FALSE;
         if ($timeout instanceof DateInterval) {
             $assert->isTimeoutValid($timeout);
             $this->timeout = $timeout;
@@ -133,24 +135,19 @@ final class ShipEngineConfig implements \JsonSerializable
         $config = array();
 
         isset($newConfig['apiKey']) ?
-            ($config['apiKey'] = $newConfig['apiKey']) :
-            ($config['apiKey'] = $this->apiKey);
+            ($config['apiKey'] = $newConfig['apiKey']) : ($config['apiKey'] = $this->apiKey);
 
         isset($newConfig['baseUrl']) ?
-            ($config['baseUrl'] = $newConfig['baseUrl']) :
-            ($config['baseUrl'] = $this->baseUrl);
+            ($config['baseUrl'] = $newConfig['baseUrl']) : ($config['baseUrl'] = $this->baseUrl);
 
         isset($newConfig['pageSize']) ?
-            ($config['pageSize'] = $newConfig['pageSize']) :
-            ($config['pageSize'] = $this->pageSize);
+            ($config['pageSize'] = $newConfig['pageSize']) : ($config['pageSize'] = $this->pageSize);
 
         isset($newConfig['retries']) ?
-            ($config['retries'] = $newConfig['retries']) :
-            ($config['retries'] = $this->retries);
+            ($config['retries'] = $newConfig['retries']) : ($config['retries'] = $this->retries);
 
         isset($newConfig['timeout']) ?
-            ($config['timeout'] = $newConfig['timeout']) :
-            ($config['timeout'] = $this->timeout);
+            ($config['timeout'] = $newConfig['timeout']) : ($config['timeout'] = $this->timeout);
 
         return new ShipEngineConfig($config);
     }
@@ -162,11 +159,11 @@ final class ShipEngineConfig implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
-          'apiKey' => $this->apiKey,
-          'baseUrl' => $this->baseUrl,
-          'pageSize' => $this->pageSize,
-          'retries' => $this->retries,
-          'timeout' => $this->timeout->s
+            'apiKey' => $this->apiKey,
+            'baseUrl' => $this->baseUrl,
+            'pageSize' => $this->pageSize,
+            'retries' => $this->retries,
+            'timeout' => $this->timeout->s
         ];
     }
 }
